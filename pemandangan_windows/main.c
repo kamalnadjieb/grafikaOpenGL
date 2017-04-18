@@ -9,8 +9,7 @@ void DisableOpenGL(HWND, HDC, HGLRC);
 int WINAPI WinMain(HINSTANCE hInstance,
                    HINSTANCE hPrevInstance,
                    LPSTR lpCmdLine,
-                   int nCmdShow)
-{
+                   int nCmdShow) {
     WNDCLASSEX wcex;
     HWND hwnd;
     HDC hDC;
@@ -57,24 +56,17 @@ int WINAPI WinMain(HINSTANCE hInstance,
     EnableOpenGL(hwnd, &hDC, &hRC);
 
     /* program main loop */
-    while (!bQuit)
-    {
+    while (!bQuit) {
         /* check for messages */
-        if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-        {
+        if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
             /* handle or dispatch messages */
-            if (msg.message == WM_QUIT)
-            {
+            if (msg.message == WM_QUIT) {
                 bQuit = TRUE;
-            }
-            else
-            {
+            } else {
                 TranslateMessage(&msg);
                 DispatchMessage(&msg);
             }
-        }
-        else
-        {
+        } else {
             /* OpenGL animation code goes here */
 
             glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -109,10 +101,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
     return msg.wParam;
 }
 
-LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
-{
-    switch (uMsg)
-    {
+LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+    switch (uMsg) {
         case WM_CLOSE:
             PostQuitMessage(0);
         break;
@@ -120,10 +110,8 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         case WM_DESTROY:
             return 0;
 
-        case WM_KEYDOWN:
-        {
-            switch (wParam)
-            {
+        case WM_KEYDOWN: {
+            switch (wParam) {
                 case VK_ESCAPE:
                     PostQuitMessage(0);
                 break;
@@ -138,8 +126,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     return 0;
 }
 
-void EnableOpenGL(HWND hwnd, HDC* hDC, HGLRC* hRC)
-{
+void EnableOpenGL(HWND hwnd, HDC* hDC, HGLRC* hRC) {
     PIXELFORMATDESCRIPTOR pfd;
 
     int iFormat;
@@ -169,8 +156,7 @@ void EnableOpenGL(HWND hwnd, HDC* hDC, HGLRC* hRC)
     wglMakeCurrent(*hDC, *hRC);
 }
 
-void DisableOpenGL (HWND hwnd, HDC hDC, HGLRC hRC)
-{
+void DisableOpenGL (HWND hwnd, HDC hDC, HGLRC hRC) {
     wglMakeCurrent(NULL, NULL);
     wglDeleteContext(hRC);
     ReleaseDC(hwnd, hDC);
