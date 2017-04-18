@@ -103,6 +103,45 @@ int WINAPI WinMain(HINSTANCE hInstance,
                 }
             glEnd();
 
+            //Gambar Pelangi
+            glBegin(GL_LINE_STRIP);
+                double x, y, r;
+                double start_angle = 0;
+                double end_angle = PI;
+                double max_angle = 2 * PI;
+                double angle_increment = PI / 1000;
+                double theta;
+                for (r = .05; r <= .3; r += .05) {
+                    for (theta = start_angle; theta < end_angle; theta += angle_increment)
+                    {
+                        x = r * cos (theta);
+                        y = r * sin (theta);
+                        if (r == .05) {
+                            glColor3f(1,0,1);
+                        } else if (r == .10) {
+                            glColor3f(0,0,1);
+                        } else if (r == .2) {
+                            glColor3f(0,1,0);
+                        } else if (r == .25) {
+                            glColor3f(1,1,0);
+                        } else if (r == .3) {
+                            glColor3f(1,0,0);
+                        } else {
+                            glColor3f(0,1,1);
+                        }
+
+                        glVertex2f(x + r * cos (theta), y - .5 + r * sin (theta));
+
+                        if (r == .05) {
+                            glVertex2f(x + (r - .05) * cos (theta), y - .5 + (r - .05) * sin (theta));
+                        } else {
+                            glVertex2f(x + (r - .1) * cos (theta), y - .5 + (r - .1) * sin (theta));
+                        }
+                    }
+
+                }
+            glEnd();
+
             // Gambar Gunung 1
             glBegin(GL_TRIANGLES);
                 glColor3f(0, 1, 0);
