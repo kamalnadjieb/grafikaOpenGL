@@ -102,6 +102,37 @@ int WINAPI WinMain(HINSTANCE hInstance,
                     glVertex2f(xinit + (radius * cos(i *  twicePi / triangleAmount)), yinit + (radius * sin(i * twicePi / triangleAmount)));
                 }
             glEnd();
+            
+
+            // Gambar sinar matahari (belum selesai)
+            glBegin(GL_TRIANGLES);
+            glColor3f(1, 1, 0);
+            glVertex3f(-0.3, 0.45, 0);
+            glVertex3f(-0.3, 0.55, 0);
+            glVertex3f(-0.375, 0.5, 0);
+            glEnd();
+
+            glBegin(GL_TRIANGLES);
+            glColor3f(1, 1, 0);
+            glVertex3f(0.3, 0.45, 0);
+            glVertex3f(0.3, 0.55, 0);
+            glVertex3f(0.375, 0.5, 0);
+            glEnd();
+
+            glBegin(GL_TRIANGLES);
+            glColor3f(1, 1, 0);
+            glVertex3f(-0.05, 0.8, 0);
+            glVertex3f(0.05, 0.8, 0);
+            glVertex3f(0, 0.875, 0);
+            glEnd();
+
+            glBegin(GL_TRIANGLES);
+            glColor3f(1, 1, 0);
+            glVertex3f(-0.05, -0.8, 0);
+            glVertex3f(0.05, -0.8, 0);
+            glVertex3f(0, -0.875, 0);
+            glEnd();
+
 
             //Gambar Pelangi
             glBegin(GL_LINE_STRIP);
