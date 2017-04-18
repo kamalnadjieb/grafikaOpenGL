@@ -106,31 +106,31 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
             // Gambar sinar matahari (belum selesai)
             glBegin(GL_TRIANGLES);
-            glColor3f(1, 1, 0);
-            glVertex3f(-0.3, 0.45, 0);
-            glVertex3f(-0.3, 0.55, 0);
-            glVertex3f(-0.375, 0.5, 0);
+                glColor3f(1, 1, 0);
+                glVertex3f(-0.3, 0.45, 0);
+                glVertex3f(-0.3, 0.55, 0);
+                glVertex3f(-0.375, 0.5, 0);
             glEnd();
 
             glBegin(GL_TRIANGLES);
-            glColor3f(1, 1, 0);
-            glVertex3f(0.3, 0.45, 0);
-            glVertex3f(0.3, 0.55, 0);
-            glVertex3f(0.375, 0.5, 0);
+                glColor3f(1, 1, 0);
+                glVertex3f(0.3, 0.45, 0);
+                glVertex3f(0.3, 0.55, 0);
+                glVertex3f(0.375, 0.5, 0);
             glEnd();
 
             glBegin(GL_TRIANGLES);
-            glColor3f(1, 1, 0);
-            glVertex3f(-0.05, 0.8, 0);
-            glVertex3f(0.05, 0.8, 0);
-            glVertex3f(0, 0.875, 0);
+                glColor3f(1, 1, 0);
+                glVertex3f(-0.05, 0.8, 0);
+                glVertex3f(0.05, 0.8, 0);
+                glVertex3f(0, 0.875, 0);
             glEnd();
 
             glBegin(GL_TRIANGLES);
-            glColor3f(1, 1, 0);
-            glVertex3f(-0.05, -0.8, 0);
-            glVertex3f(0.05, -0.8, 0);
-            glVertex3f(0, -0.875, 0);
+                glColor3f(1, 1, 0);
+                glVertex3f(-0.05, -0.8, 0);
+                glVertex3f(0.05, -0.8, 0);
+                glVertex3f(0, -0.875, 0);
             glEnd();
 
 
@@ -194,6 +194,36 @@ int WINAPI WinMain(HINSTANCE hInstance,
             glEnd();
 
             // Gambar Pohon 1
+            // Batang pohon
+            glBegin(GL_QUADS);
+                glColor3f(0.73, 0.48, 0.34);
+                glVertex2f(0.84, -0.8);
+                glVertex2f(0.9, -0.8);
+                glVertex2f(0.9, -1);
+                glVertex2f(0.84, -1);
+            glEnd();
+
+            // Gambar daun
+            glBegin(GL_POLYGON);
+                glColor3f(0.13, 0.69, 0.3);
+                glVertex2f(0.74, -0.76);
+                glVertex2f(0.76, -0.74);
+                glVertex2f(0.74, -0.74);
+                glVertex2f(0.87, -0.68);
+                glVertex2f(1, -0.74);
+                glVertex2f(0.98, -0.74);
+                glVertex2f(1, -0.76);
+
+                glColor3f(0.16, 0.82, 0.35);
+                glVertex2f(0.98, -0.76);
+                glVertex2f(1, -0.78);
+                glVertex2f(0.98, -0.78);
+                glVertex2f(1, -0.8);
+                glVertex2f(0.74, -0.8);
+                glVertex2f(0.76, -0.78);
+                glVertex2f(0.74, -0.78);
+                glVertex2f(0.76, -0.76);
+            glEnd();
 
             glPopMatrix();
 
