@@ -5,7 +5,6 @@ LRESULT CALLBACK WindowProc(HWND, UINT, WPARAM, LPARAM);
 void EnableOpenGL(HWND hwnd, HDC*, HGLRC*);
 void DisableOpenGL(HWND, HDC, HGLRC);
 
-
 int WINAPI WinMain(HINSTANCE hInstance,
                    HINSTANCE hPrevInstance,
                    LPSTR lpCmdLine,
@@ -86,6 +85,24 @@ int WINAPI WinMain(HINSTANCE hInstance,
                 glVertex2f(-1, -1);
             glEnd();
 
+            // Gambar Matahari
+            int triangleAmount = 20; //# of triangles used to draw circle
+            const float PI = 3.14;
+            GLfloat twicePi = 2.0f * PI;
+            GLfloat xinit = 0; // center of circle
+            GLfloat yinit = 0.5; // center of circle
+            GLfloat radius = 0.25; // radius of circle
+
+            glBegin(GL_TRIANGLE_FAN);
+                glColor3f(1, 0, 0);
+                glVertex2f(xinit, yinit); // center of circle
+                glColor3f(1, 1, 0);
+                int i;
+                for (i = 0; i <= triangleAmount; i++) {
+                    glVertex2f(xinit + (radius * cos(i *  twicePi / triangleAmount)), yinit + (radius * sin(i * twicePi / triangleAmount)));
+                }
+            glEnd();
+
             // Gambar Gunung 1
             glBegin(GL_TRIANGLES);
                 glColor3f(0, 1, 0);
@@ -105,6 +122,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
                 glColor3f(1, 1, 1);
                 glVertex2f(0.5, 0);
             glEnd();
+
+            // Gambar Pohon 1
 
             glPopMatrix();
 
