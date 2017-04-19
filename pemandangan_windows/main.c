@@ -4,6 +4,7 @@
 LRESULT CALLBACK WindowProc(HWND, UINT, WPARAM, LPARAM);
 void EnableOpenGL(HWND hwnd, HDC*, HGLRC*);
 void DisableOpenGL(HWND, HDC, HGLRC);
+void DrawTree(GLfloat xtrans, GLfloat ytrans);
 
 int WINAPI WinMain(HINSTANCE hInstance,
                    HINSTANCE hPrevInstance,
@@ -45,7 +46,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
                           500,
                           500,
                           NULL,
-                          NULL,
+                           NULL,
                           hInstance,
                           NULL);
 
@@ -104,42 +105,142 @@ int WINAPI WinMain(HINSTANCE hInstance,
             glEnd();
 
             //Gambar Pelangi
-            glBegin(GL_LINE_STRIP);
-                double x, y, r;
-                double start_angle = 0;
-                double end_angle = PI;
-                double max_angle = 2 * PI;
-                double angle_increment = PI / 1000;
-                double theta;
-                for (r = .05; r <= .3; r += .05) {
-                    for (theta = start_angle; theta < end_angle; theta += angle_increment)
-                    {
-                        x = r * cos (theta);
-                        y = r * sin (theta);
-                        if (r == .05) {
-                            glColor3f(1,0,1);
-                        } else if (r == .10) {
-                            glColor3f(0,0,1);
-                        } else if (r == .2) {
-                            glColor3f(0,1,0);
-                        } else if (r == .25) {
-                            glColor3f(1,1,0);
-                        } else if (r == .3) {
-                            glColor3f(1,0,0);
-                        } else {
-                            glColor3f(0,1,1);
-                        }
+            GLfloat dx = -0.85;
+            GLfloat dy = -1;
+            GLfloat w = 0.1;
+            GLfloat step = 0.05;
+            for (i = 0; i < 100; i++) {
+              glBegin(GL_QUAD_STRIP);
 
-                        glVertex2f(x + r * cos (theta), y - .5 + r * sin (theta));
+              glColor3f(1,0,0); //Red
+              glVertex2f(dx,dy);
+              glVertex2f(dx+w,dy+w);
 
-                        if (r == .05) {
-                            glVertex2f(x + (r - .05) * cos (theta), y - .5 + (r - .05) * sin (theta));
-                        } else {
-                            glVertex2f(x + (r - .1) * cos (theta), y - .5 + (r - .1) * sin (theta));
-                        }
-                    }
+              glColor3f(1,0.6,0); //Orange
+              glVertex2f(dx+step,dy-step);
+              glVertex2f(dx+w+step,dy+w-step);
 
-                }
+              glColor3f(1,1,0);//Yellow
+              glVertex2f(dx+step*2,dy-step*2);
+              glVertex2f(dx+w+step*2,dy+w-step*2);
+
+              glColor3f(0.2,1,0); //Green
+              glVertex2f(dx+step*3,dy-step*3);
+              glVertex2f(dx+w+step*3,dy+w-step*3);
+
+              glColor3f(0,0.6,1); //Blue
+              glVertex2f(dx+step*4,dy-step*4);
+              glVertex2f(dx+w+step*4,dy+w-step*4);
+
+              glColor3f(0.4,0.2,1); //Purple
+              glVertex2f(dx+step*5,dy-step*5);
+              glVertex2f(dx+w+step*5,dy+w-step*5);
+              glEnd();
+
+              dx += w;
+              dy += w;
+            }
+
+            float rotate_x(float cx, float cy, float angle, float x, float y) {
+                float s = sin(angle);
+                float c = cos(angle);
+
+                // translate point back to origin:
+                x -= cx;
+                y -= cy;
+
+                // rotate point
+                float xnew = x * c - y * s;
+                float ynew = x * s + y * c;
+
+                // translate point back:
+                x = xnew + cx;
+                y = ynew + cy;
+
+                return x;
+            }
+
+            float rotate_y(float cx, float cy, float angle, float x, float y) {
+                float s = sin(angle);
+                float c = cos(angle);
+
+                // translate point back to origin:
+                x -= cx;
+                y -= cy;
+
+                // rotate point
+                float xnew = x * c - y * s;
+                float ynew = x * s + y * c;
+
+                // translate point back:
+                x = xnew + cx;
+                y = ynew + cy;
+
+                return y;
+            }
+
+            // Gambar sinar matahari (belum selesai)
+            glBegin(GL_TRIANGLES);
+                glColor3f(1, 1, 0);
+                glVertex3f(-0.3, 0.45, 0);
+                glVertex3f(-0.3, 0.55, 0);
+                glVertex3f(-0.375, 0.5, 0);
+            glEnd();
+
+            glBegin(GL_TRIANGLES);
+                glColor3f(1, 1, 0);
+                glVertex3f(rotate_x(0, 0.5, 0.785, -0.05, 0.8), rotate_y(0, 0.5, 0.785, -0.05, 0.8), 0);
+                glVertex3f(rotate_x(0, 0.5, 0.785, 0.05, 0.8), rotate_y(0, 0.5, 0.785, 0.05, 0.8), 0);
+                glVertex3f(rotate_x(0, 0.5, 0.785, 0, 0.875), rotate_y(0, 0.5, 0.785, 0, 0.875), 0);
+            glEnd();
+
+            glBegin(GL_TRIANGLES);
+                glColor3f(1, 1, 0);
+                glVertex3f(rotate_x(0, 0.5, 2.36, -0.05, 0.8), rotate_y(0, 0.5, 2.36, -0.05, 0.8), 0);
+                glVertex3f(rotate_x(0, 0.5, 2.36, 0.05, 0.8), rotate_y(0, 0.5, 2.36, 0.05, 0.8), 0);
+                glVertex3f(rotate_x(0, 0.5, 2.36, 0, 0.875), rotate_y(0, 0.5, 2.36, 0, 0.875), 0);
+            glEnd();
+
+            glBegin(GL_TRIANGLES);
+                glColor3f(1, 1, 0);
+                glVertex3f(rotate_x(0, 0.5, 3.93, -0.05, 0.8), rotate_y(0, 0.5, 3.93, -0.05, 0.8), 0);
+                glVertex3f(rotate_x(0, 0.5, 3.93, 0.05, 0.8), rotate_y(0, 0.5, 3.93, 0.05, 0.8), 0);
+                glVertex3f(rotate_x(0, 0.5, 3.93, 0, 0.875), rotate_y(0, 0.5, 3.93, 0, 0.875), 0);
+            glEnd();
+
+            glBegin(GL_TRIANGLES);
+                glColor3f(1, 1, 0);
+                glVertex3f(rotate_x(0, 0.5, 5.5, -0.05, 0.8), rotate_y(0, 0.5, 5.5, -0.05, 0.8), 0);
+                glVertex3f(rotate_x(0, 0.5, 5.5, 0.05, 0.8), rotate_y(0, 0.5, 5.5, 0.05, 0.8), 0);
+                glVertex3f(rotate_x(0, 0.5, 5.5, 0, 0.875), rotate_y(0, 0.5, 5.5, 0, 0.875), 0);
+            glEnd();
+
+            glBegin(GL_TRIANGLES);
+                glColor3f(1, 1, 0);
+                glVertex3f(0.3, 0.45, 0);
+                glVertex3f(0.3, 0.55, 0);
+                glVertex3f(0.375, 0.5, 0);
+            glEnd();
+
+            glBegin(GL_TRIANGLES);
+                glColor3f(1, 1, 0);
+                glVertex3f(-0.05, 0.8, 0);
+                glVertex3f(0.05, 0.8, 0);
+                glVertex3f(0, 0.875, 0);
+            glEnd();
+
+            glBegin(GL_TRIANGLES);
+                glColor3f(1, 1, 0);
+                glVertex3f(-0.05, 0.8, 0);
+                glVertex3f(0.05, 0.8, 0);
+                glVertex3f(0, 0.875, 0);
+            glEnd();
+
+            glBegin(GL_TRIANGLES);
+                glColor3f(1, 1, 0);
+                glVertex3f(-0.05, 0.2, 0);
+                glVertex3f(0.05, 0.2, 0);
+                glVertex3f(0, 0.125, 0);
             glEnd();
 
             // Gambar Gunung 1
@@ -162,7 +263,14 @@ int WINAPI WinMain(HINSTANCE hInstance,
                 glVertex2f(0.5, 0);
             glEnd();
 
-            // Gambar Pohon 1
+            DrawTree(-0.5, 0);
+            DrawTree(-0.25, 0);
+            DrawTree(0, 0);
+            DrawTree(-1, 0);
+            DrawTree(-0.75, 0);
+            DrawTree(-1.5, 0);
+            DrawTree(-1.25, 0);
+            DrawTree(-1.75, 0);
 
             glPopMatrix();
 
@@ -243,3 +351,37 @@ void DisableOpenGL (HWND hwnd, HDC hDC, HGLRC hRC) {
     ReleaseDC(hwnd, hDC);
 }
 
+void DrawTree(GLfloat xtrans, GLfloat ytrans) {
+    // Batang pohon
+    glBegin(GL_QUADS);
+        glColor3f(0.73, 0.48, 0.34);
+        glVertex2f(0.84+xtrans, -0.8+ytrans);
+        glVertex2f(0.9+xtrans, -0.8+ytrans);
+        glVertex2f(0.9+xtrans, -1+ytrans);
+        glVertex2f(0.84+xtrans, -1+ytrans);
+    glEnd();
+
+    // Gambar daun
+    glBegin(GL_POLYGON);
+        glBegin(GL_POLYGON);
+        glColor3f(0.13, 0.69, 0.3);
+        glVertex2f(0.78+xtrans, -0.76+ytrans);
+        glVertex2f(0.74+xtrans, -0.76+ytrans);
+        glVertex2f(0.78+xtrans, -0.72+ytrans);
+        glVertex2f(0.74+xtrans, -0.72+ytrans);
+        glVertex2f(0.78+xtrans, -0.68+ytrans);
+        glVertex2f(0.74+xtrans, -0.68+ytrans);
+        glVertex2f(0.87+xtrans, -0.5+ytrans);
+        glVertex2f(1+xtrans, -0.68+ytrans);
+        glVertex2f(0.96+xtrans, -0.68+ytrans);
+        glVertex2f(1+xtrans, -0.72+ytrans);
+        glVertex2f(0.96+xtrans, -0.72+ytrans);
+        glVertex2f(1+xtrans, -0.76+ytrans);
+        glVertex2f(0.96+xtrans, -0.76+ytrans);
+
+        glColor3f(0.16+xtrans, 0.82, 0.35);
+        glVertex2f(1+xtrans, -0.8+ytrans);
+        glVertex2f(0.74+xtrans, -0.8+ytrans);
+
+    glEnd();
+}
